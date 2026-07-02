@@ -6,13 +6,25 @@
 
 ## Key Features
 
-- **Daily Mass Readings**: Fetches and renders the First Reading, Responsorial Psalm, Second Reading, and Gospel dynamically from [Universalis](https://universalis.com).
+- **Multilingual Support (English & Tamil)**:
+  - Dynamic client-side language switching dropdown between English and Tamil (தமிழ்).
+  - Dynamic Google Fonts integration (`Noto Sans Tamil` with Latha and Arial Unicode MS fallbacks) scoped globally.
+  - Language preference persisted across sessions via `localStorage` and `cookie` to ensure existing users keep their previous choice.
+  - Administrator-defined default system language setting in the dashboard.
+- **Daily Mass Readings Providers**:
+  - **English Readings**: Fetches dynamically from the [Universalis API](https://universalis.com).
+  - **Tamil Readings**: Fetches from the [Catholic Gallery](https://www.catholicgallery.org/) WordPress REST API via an API-first `TamilProvider` (no layout-dependent scraping).
+  - Normalizes both providers into the exact same unified interface schema.
+- **Advanced Caching**:
+  - Caches Tamil Mass readings locally in `cache/tamil/` (24-hour TTL).
+  - Built-in resilience: on external service failures, the provider returns cached stale files instead of breaking the page.
 - **Interactive Reading Customizer**: Allows users to customize the scripture font style (choice of Serif/Sans-Serif) and dynamically adjust font size to their reading preference. User choices are saved in `localStorage`.
-- **Liturgical Calendar**: Renders a complete calendar showing liturgical colors, seasons, feasts, and saint names.
-- **API Resilience & connection monitoring**: Incorporates fail-fast connection checks and downtime caching (short-circuiting). If the external Church Calendar API is offline, the site instantly displays fallback basic calendar days instead of freezing or timing out.
-- **Search Capabilities**: Search daily scripture by exact date, Bible reference (e.g. John 3:16), or saint name.
+- **Liturgical Calendar**: Renders a complete calendar showing liturgical colors, seasons, feasts, and saint names in both English and Tamil (e.g. translated liturgical seasons and color names).
+- **API Resilience & Connection Monitoring**: Incorporates connection checks and downtime caching. If the external Church Calendar API is offline, the site instantly displays fallback basic calendar days instead of freezing or timing out.
+- **Search Capabilities**: Search daily scripture by exact date, Bible reference (e.g. John 3:16), or saint name. Reference search is fully localized and uses the appropriate language provider.
 - **Offline Mode**: Automatically detects connectivity status and displays a custom offline page if the network goes down.
-- **Admin Dashboard**: Secure administrative interface for managing app settings, user bookmarks, prayer requests, and user feedback.
+- **Admin Dashboard**: Secure administrative interface for managing app settings (including system default language), user bookmarks, prayer requests, and user feedback.
+- **SEO Optimization**: Fully localized meta tags, `<title>`, and dynamic `<html lang>` attributes to boost search engine indexing in multiple languages.
 
 ---
 
@@ -24,7 +36,8 @@
 - **CSS Framework**: Bootstrap (5.3.3)
 - **Icons**: Bootstrap Icons (1.11.3)
 - **External Data Providers**: 
-  - Scripture readings: Universalis API
+  - English Mass readings: Universalis API
+  - Tamil Mass readings: Catholic Gallery WP REST API (`bible.catholicgallery.org`)
   - Liturgical details: Church Calendar API (`calapi.inadiutorium.cz`)
 
 ---
@@ -72,4 +85,4 @@ Then visit:
 
 ## License
 
-This project is open-source. Mass readings content is provided courtesy of [Universalis Publishing Ltd](https://universalis.com).
+This project is open-source. Mass readings content is provided courtesy of [Universalis Publishing Ltd](https://universalis.com) (English) and [Catholic Gallery](https://www.catholicgallery.org) (Tamil).
