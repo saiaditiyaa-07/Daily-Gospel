@@ -117,11 +117,30 @@
         });
     }
 
+    function t(msg) {
+        const lang = config.lang || 'en';
+        const dictionary = {
+            'Link copied to clipboard!': {
+                'en': 'Link copied to clipboard!',
+                'ta': 'இணைப்பு நகலெடுக்கப்பட்டது!'
+            },
+            'Failed to bookmark': {
+                'en': 'Failed to bookmark',
+                'ta': 'குறிப்பதில் தோல்வி.'
+            },
+            'Unable to save bookmark. Database may not be configured.': {
+                'en': 'Unable to save bookmark. Database may not be configured.',
+                'ta': 'குறிப்பைச் சேமிக்க முடியவில்லை. தரவுத்தளம் இணைக்கப்படவில்லை.'
+            }
+        };
+        return (dictionary[msg] && dictionary[msg][lang]) ? dictionary[msg][lang] : msg;
+    }
+
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(function () {
-            showToast('Link copied to clipboard!');
+            showToast(t('Link copied to clipboard!'));
         }).catch(function () {
-            prompt('Copy this link:', text);
+            prompt(config.lang === 'ta' ? 'இணைப்பை நகலெடுக்கவும்:' : 'Copy this link:', text);
         });
     }
 
@@ -166,9 +185,9 @@
                 });
 
                 const data = await response.json();
-                showToast(data.success ? data.message : (data.error || 'Failed to bookmark'));
+                showToast(data.success ? data.message : (data.error || t('Failed to bookmark')));
             } catch (err) {
-                showToast('Unable to save bookmark. Database may not be configured.');
+                showToast(t('Unable to save bookmark. Database may not be configured.'));
             }
         });
     }

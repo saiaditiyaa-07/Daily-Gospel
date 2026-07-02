@@ -17,7 +17,7 @@ if (!is_array($input)) {
 }
 
 if (!validate_csrf($input['csrf_token'] ?? null)) {
-    json_response(['success' => false, 'error' => 'Invalid security token.'], 403);
+    json_response(['success' => false, 'error' => __('validation_error')], 403);
 }
 
 $name = trim((string) ($input['name'] ?? ''));
@@ -26,11 +26,11 @@ $request = trim((string) ($input['request'] ?? ''));
 $isAnonymous = !empty($input['anonymous']) ? 1 : 0;
 
 if ($request === '') {
-    json_response(['success' => false, 'error' => 'Prayer request is required.'], 422);
+    json_response(['success' => false, 'error' => __('validation_error')], 422);
 }
 
 if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    json_response(['success' => false, 'error' => 'Invalid email address.'], 422);
+    json_response(['success' => false, 'error' => __('validation_error')], 422);
 }
 
 try {
@@ -47,8 +47,8 @@ try {
         'status' => 'pending',
     ]);
 
-    json_response(['success' => true, 'message' => 'Your prayer request has been submitted.']);
+    json_response(['success' => true, 'message' => __('prayer_success')]);
 } catch (Throwable $e) {
     error_log('Prayer request error: ' . $e->getMessage());
-    json_response(['success' => false, 'error' => 'Unable to submit prayer request.'], 500);
+    json_response(['success' => false, 'error' => __('validation_error')], 500);
 }

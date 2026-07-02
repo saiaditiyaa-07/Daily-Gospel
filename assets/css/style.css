@@ -28,6 +28,13 @@
     --liturgical-black: #334155;
 }
 
+/* Tamil Font Overrides */
+.lang-ta, .lang-ta body {
+    --dg-font-serif: 'Noto Sans Tamil', 'Latha', 'Arial Unicode MS', serif;
+    --dg-font-sans: 'Noto Sans Tamil', 'Latha', 'Arial Unicode MS', sans-serif;
+    --dg-font-headings: 'Noto Sans Tamil', 'Latha', 'Arial Unicode MS', sans-serif;
+}
+
 [data-bs-theme="dark"] {
     --dg-bg: #0f172a;
     --dg-bg-soft: #1e293b;

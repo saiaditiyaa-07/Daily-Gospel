@@ -17,7 +17,7 @@ if (!is_array($input)) {
 }
 
 if (!validate_csrf($input['csrf_token'] ?? null)) {
-    json_response(['success' => false, 'error' => 'Invalid security token.'], 403);
+    json_response(['success' => false, 'error' => __('validation_error')], 403);
 }
 
 $name = trim((string) ($input['name'] ?? ''));
@@ -27,11 +27,11 @@ $message = trim((string) ($input['message'] ?? ''));
 $rating = (int) ($input['rating'] ?? 0);
 
 if ($message === '') {
-    json_response(['success' => false, 'error' => 'Message is required.'], 422);
+    json_response(['success' => false, 'error' => __('validation_error')], 422);
 }
 
 if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    json_response(['success' => false, 'error' => 'Invalid email address.'], 422);
+    json_response(['success' => false, 'error' => __('validation_error')], 422);
 }
 
 if ($rating < 0 || $rating > 5) {
@@ -53,8 +53,8 @@ try {
         'status' => 'new',
     ]);
 
-    json_response(['success' => true, 'message' => 'Thank you for your feedback!']);
+    json_response(['success' => true, 'message' => __('feedback_success')]);
 } catch (Throwable $e) {
     error_log('Feedback error: ' . $e->getMessage());
-    json_response(['success' => false, 'error' => 'Unable to submit feedback.'], 500);
+    json_response(['success' => false, 'error' => __('validation_error')], 500);
 }

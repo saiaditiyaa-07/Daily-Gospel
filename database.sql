@@ -82,7 +82,8 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
     ('universalis_region', '', 'Universalis calendar region path'),
     ('calendar_id', 'default', 'Liturgical calendar identifier'),
     ('contact_email', 'admin@dailygospel.local', 'Admin contact email'),
-    ('maintenance_mode', '0', 'Enable maintenance mode (0/1)')
+    ('maintenance_mode', '0', 'Enable maintenance mode (0/1)'),
+    ('default_language', 'en', 'Default system language (en/ta)')
 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value);
 
 -- Default admin user (password set via admin/setup.php)

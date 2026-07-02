@@ -26,11 +26,11 @@ if ($month < 1 || $month > 12) {
 }
 
 if ($query === '' && $type !== 'date') {
-    json_response(['success' => false, 'error' => 'Search query is required'], 400);
+    json_response(['success' => false, 'error' => __('search_query_required')], 400);
 }
 
 if (!in_array($type, ['date', 'saint', 'reference'], true)) {
-    json_response(['success' => false, 'error' => 'Invalid search type'], 400);
+    json_response(['success' => false, 'error' => __('search_invalid_type')], 400);
 }
 
 $results = [];
@@ -54,7 +54,7 @@ try {
             } else {
                 json_response([
                     'success' => false,
-                    'error' => $data['error'] ?? 'Unable to load readings for that date.',
+                    'error' => $data['error'] ?? __('error_loading_readings'),
                 ], 200); // 200 OK prevents web servers from replacing handled errors with HTML
             }
             break;
@@ -89,14 +89,14 @@ try {
             break;
 
         case 'reference':
-            $readingProvider = new UniversalisReadingProvider(
-                new ApiClient(10, 5)
-            );
+            $readingProvider = Language::get() === 'ta'
+                ? new TamilProvider()
+                : new UniversalisReadingProvider(new ApiClient(10, 5));
             $daysInMonth = get_days_in_month($month, $year);
             $searchRef = strtolower(preg_replace('/\s+/', '', $query) ?? '');
 
             if ($searchRef === '') {
-                json_response(['success' => false, 'error' => 'Enter a Bible reference such as John 3:16'], 400);
+                json_response(['success' => false, 'error' => __('search_enter_ref')], 400);
             }
 
             for ($day = 1; $day <= $daysInMonth; $day++) {
@@ -141,7 +141,7 @@ try {
             }
 
             if ($daysInMonth > 0 && count($results) === 0) {
-                $warnings[] = 'Reference search scans one month at a time. Try a different month or year.';
+                $warnings[] = __('search_warning_ref');
             }
             break;
     }
@@ -149,7 +149,7 @@ try {
     error_log('Search API error: ' . $e->getMessage());
     json_response([
         'success' => false,
-        'error' => 'Search failed due to a server error. Please try again.',
+        'error' => __('search_failed'),
     ], 500);
 }
 

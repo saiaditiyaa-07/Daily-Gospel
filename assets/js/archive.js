@@ -17,6 +17,27 @@
 
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNamesTa = ['ஜனவரி', 'பிப்ரவரி', 'மார்ச்', 'ஏப்ரல்', 'மே', 'ஜூன்',
+        'ஜூலை', 'ஆகஸ்ட்', 'செப்டம்பர்', 'அக்டோபர்', 'நவம்பர்', 'டிசம்பர்'];
+
+    function t(msg) {
+        const lang = config.lang || 'en';
+        const dictionary = {
+            'Liturgical colours may be unavailable; all dates still link to readings.': {
+                'en': 'Liturgical colours may be unavailable; all dates still link to readings.',
+                'ta': 'வழிபாட்டு நிறங்கள் கிடைக்காமல் போகலாம்; அனைத்து தேதிகளும் வாசகங்களுடன் இணைக்கப்பட்டுள்ளன.'
+            },
+            'Liturgical calendar unavailable — showing dates only.': {
+                'en': 'Liturgical calendar unavailable — showing dates only.',
+                'ta': 'வழிபாட்டு நாட்காட்டி கிடைக்கவில்லை — தேதிகள் மட்டுமே காண்பிக்கப்படுகின்றன.'
+            },
+            'Could not reach the calendar service — showing dates only.': {
+                'en': 'Could not reach the calendar service — showing dates only.',
+                'ta': 'நாட்காட்டிச் சேவையை அணுக முடியவில்லை — தேதிகள் மட்டுமே காண்பிக்கப்படுகின்றன.'
+            }
+        };
+        return (dictionary[msg] && dictionary[msg][lang]) ? dictionary[msg][lang] : msg;
+    }
 
     const colourDotMap = {
         green: 'colour-dot-green',
@@ -99,7 +120,10 @@
         calendarGrid.innerHTML = html;
 
         if (calendarTitle) {
-            calendarTitle.textContent = monthNames[month - 1] + ' ' + year;
+            const isTamil = config.lang === 'ta';
+            calendarTitle.textContent = isTamil
+                ? monthNamesTa[month - 1] + ' ' + year
+                : monthNames[month - 1] + ' ' + year;
         }
 
         history.replaceState(null, '', config.baseUrl + '/pages/archive.php?year=' + year + '&month=' + month);
@@ -129,7 +153,7 @@
 
                 if (data.partial || data.source === 'basic') {
                     showNotice(
-                        data.message || 'Liturgical colours may be unavailable; all dates still link to readings.',
+                        data.message || t('Liturgical colours may be unavailable; all dates still link to readings.'),
                         'warning'
                     );
                 }
@@ -137,10 +161,10 @@
             }
 
             renderCalendar(year, month, buildBasicDays(year, month));
-            showNotice('Liturgical calendar unavailable — showing dates only.', 'warning');
+            showNotice(t('Liturgical calendar unavailable — showing dates only.'), 'warning');
         } catch (err) {
             renderCalendar(year, month, buildBasicDays(year, month));
-            showNotice('Could not reach the calendar service — showing dates only.', 'warning');
+            showNotice(t('Could not reach the calendar service — showing dates only.'), 'warning');
         } finally {
             loading.classList.add('d-none');
             calendarGrid.style.opacity = '1';

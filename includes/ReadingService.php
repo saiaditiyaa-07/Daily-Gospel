@@ -14,7 +14,15 @@ class ReadingService
         ?ReadingProviderInterface $readingProvider = null,
         ?LiturgicalCalendarService $calendarService = null
     ) {
-        $this->readingProvider = $readingProvider ?? new UniversalisReadingProvider();
+        if ($readingProvider === null) {
+            if (Language::get() === 'ta') {
+                $this->readingProvider = new TamilProvider();
+            } else {
+                $this->readingProvider = new EnglishProvider();
+            }
+        } else {
+            $this->readingProvider = $readingProvider;
+        }
         $this->calendarService = $calendarService ?? new LiturgicalCalendarService();
     }
 
@@ -43,13 +51,14 @@ class ReadingService
             $calendarRaw = $this->calendarService->getDay($dateObj);
             $calendar = $this->calendarService->normalizeDay($calendarRaw, $dateObj);
 
-            return $this->mergeResults($readings, $calendar, true);
+            $success = $readings['success'] ?? true;
+            return $this->mergeResults($readings, $calendar, $success);
         } catch (Throwable $e) {
             error_log('ReadingService error: ' . $e->getMessage());
 
             return [
                 'success' => false,
-                'error' => "Unable to load today's readings. Please try again later.",
+                'error' => __("error_loading_readings"),
                 'date' => $dateObj->format('Y-m-d'),
                 'formatted_date' => $dateObj->format('l j F Y'),
             ];

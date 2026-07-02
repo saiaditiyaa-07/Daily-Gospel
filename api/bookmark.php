@@ -21,7 +21,7 @@ $title = trim((string) ($input['title'] ?? ''));
 $sessionId = session_id();
 
 if ($title === '') {
-    $title = 'Readings for ' . format_display_date($date);
+    $title = __('title_daily_mass_readings') . ' — ' . format_display_date($date);
 }
 
 try {
@@ -38,10 +38,10 @@ try {
 
     json_response([
         'success' => true,
-        'message' => 'Reading bookmarked successfully.',
+        'message' => __('bookmark_added'),
         'id' => (int) $db->lastInsertId(),
     ]);
 } catch (Throwable $e) {
     error_log('Bookmark error: ' . $e->getMessage());
-    json_response(['success' => false, 'error' => 'Unable to save bookmark.'], 500);
+    json_response(['success' => false, 'error' => __('validation_error')], 500);
 }

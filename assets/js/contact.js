@@ -6,6 +6,21 @@
 
     const config = window.DailyGospel || {};
 
+    function t(msg) {
+        const lang = config.lang || 'en';
+        const dictionary = {
+            'Unable to submit feedback.': {
+                'en': 'Unable to submit feedback.',
+                'ta': 'கருத்துக்களைச் சமர்ப்பிக்க முடியவில்லை.'
+            },
+            'Unable to submit prayer request.': {
+                'en': 'Unable to submit prayer request.',
+                'ta': 'ஜெப விண்ணப்பத்தைச் சமர்ப்பிக்க முடியவில்லை.'
+            }
+        };
+        return (dictionary[msg] && dictionary[msg][lang]) ? dictionary[msg][lang] : msg;
+    }
+
     /* Feedback form */
     const feedbackForm = document.getElementById('feedback-form');
     const feedbackAlert = document.getElementById('feedback-alert');
@@ -38,7 +53,7 @@
                 feedbackAlert.innerHTML = '<div class="alert alert-' + (data.success ? 'success' : 'danger') + ' rounded-3">' + (data.message || data.error) + '</div>';
                 if (data.success) feedbackForm.reset();
             } catch (err) {
-                feedbackAlert.innerHTML = '<div class="alert alert-danger rounded-3">Unable to submit feedback.</div>';
+                feedbackAlert.innerHTML = '<div class="alert alert-danger rounded-3">' + t('Unable to submit feedback.') + '</div>';
             }
         });
     }
@@ -64,7 +79,7 @@
                 prayerAlert.innerHTML = '<div class="alert alert-' + (data.success ? 'success' : 'danger') + ' rounded-3">' + (data.message || data.error) + '</div>';
                 if (data.success) prayerForm.reset();
             } catch (err) {
-                prayerAlert.innerHTML = '<div class="alert alert-danger rounded-3">Unable to submit prayer request.</div>';
+                prayerAlert.innerHTML = '<div class="alert alert-danger rounded-3">' + t('Unable to submit prayer request.') + '</div>';
             }
         });
     }

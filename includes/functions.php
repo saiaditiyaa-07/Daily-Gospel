@@ -9,9 +9,16 @@ require_once APP_ROOT . '/config.php';
 require_once APP_ROOT . '/includes/ApiClient.php';
 require_once APP_ROOT . '/includes/ReadingProviderInterface.php';
 require_once APP_ROOT . '/includes/UniversalisReadingProvider.php';
+require_once APP_ROOT . '/providers/EnglishProvider.php';
+require_once APP_ROOT . '/providers/TamilProvider.php';
+require_once APP_ROOT . '/includes/Language.php';
 require_once APP_ROOT . '/includes/LiturgicalCalendarService.php';
 require_once APP_ROOT . '/includes/ReadingService.php';
 require_once APP_ROOT . '/includes/Database.php';
+
+// Initialize language early
+Language::init();
+
 
 /**
  * Start secure session if not already started.

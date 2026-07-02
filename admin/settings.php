@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && validate_csrf($_POST['csrf_token'] 
         'universalis_region' => trim($_POST['universalis_region'] ?? ''),
         'calendar_id' => trim($_POST['calendar_id'] ?? 'default'),
         'contact_email' => trim($_POST['contact_email'] ?? ''),
+        'default_language' => trim($_POST['default_language'] ?? 'en'),
         'maintenance_mode' => isset($_POST['maintenance_mode']) ? '1' : '0',
     ];
 
@@ -73,6 +74,13 @@ require __DIR__ . '/includes/layout-top.php';
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Liturgical Calendar ID</label>
                     <input type="text" class="form-control" name="calendar_id" value="<?= e($settingsMap['calendar_id'] ?? 'default') ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Default Language</label>
+                    <select class="form-select" name="default_language">
+                        <option value="en"<?= ($settingsMap['default_language'] ?? 'en') === 'en' ? ' selected' : '' ?>>English</option>
+                        <option value="ta"<?= ($settingsMap['default_language'] ?? 'en') === 'ta' ? ' selected' : '' ?>>தமிழ் (Tamil)</option>
+                    </select>
                 </div>
                 <div class="col-md-6 d-flex align-items-end">
                     <div class="form-check">
