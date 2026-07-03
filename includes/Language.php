@@ -53,9 +53,9 @@ class Language
 
         // 4. DB setting
         if ($lang === null) {
-            $lang = get_setting('default_language', 'en');
+            $lang = get_setting('default_language', 'ta');
             if (!in_array($lang, ['en', 'ta'], true)) {
-                $lang = 'en';
+                $lang = 'ta';
             }
         }
 

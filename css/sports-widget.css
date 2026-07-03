@@ -1,0 +1,133 @@
+/*
+ * Sports Widget Style
+ * Responsive live cricket scores and headlines
+ */
+
+.sports-widget-card {
+    background-color: var(--dg-bg, #ffffff);
+    border: 1px solid var(--dg-border, #e2e8f0);
+    border-radius: var(--dg-radius, 0.75rem);
+    box-shadow: var(--dg-card-shadow, 0 2px 16px rgba(0, 86, 204, 0.07));
+    transition: var(--dg-transition, 0.25s ease);
+}
+
+.sports-widget-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 86, 204, 0.12);
+}
+
+/* Blinking Live Dot Ping */
+.live-dot-ping {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #10b981; /* emerald-500 */
+    border-radius: 50%;
+}
+
+.live-dot-ping::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #10b981;
+    border-radius: 50%;
+    animation: live-ping-anim 1.5s infinite ease-in-out;
+}
+
+@keyframes live-ping-anim {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2.4);
+        opacity: 0;
+    }
+}
+
+/* Live Score Box */
+.live-score-box {
+    background-color: rgba(59, 130, 246, 0.05); /* blue-50/50 */
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 0.5rem;
+    transition: var(--dg-transition, 0.25s ease);
+}
+
+.live-score-box:hover {
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+.score-teams {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--dg-primary, #0056cc);
+}
+
+.score-runs {
+    font-family: var(--dg-font-headings, inherit);
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--dg-text, #1e293b);
+}
+
+.score-status {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--dg-text-muted, #64748b);
+}
+
+/* Headlines */
+.headline-item {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dg-text, #1e293b);
+    line-height: 1.4;
+    transition: var(--dg-transition, 0.25s ease);
+    padding: 2px 0;
+}
+
+.headline-item:hover {
+    color: var(--dg-accent, #de0700);
+}
+
+.headline-item i {
+    color: var(--dg-primary, #0056cc);
+    transition: transform var(--dg-transition, 0.25s ease);
+}
+
+.headline-item:hover i {
+    transform: translateX(3px);
+    color: var(--dg-accent, #de0700);
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Pulse skeleton loading anim */
+.skeleton-pulse {
+    animation: skeleton-pulse-anim 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-pulse-anim {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Dark Mode Overrides */
+[data-bs-theme="dark"] .live-score-box {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.25);
+}

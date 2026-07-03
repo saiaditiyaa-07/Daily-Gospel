@@ -33,7 +33,6 @@ $year = (int) date('Y', strtotime($sidebarDate));
             <li><a href="<?= url('pages/archive.php?year=' . $year) ?>"><i class="bi bi-calendar-month"></i> <?= e(__('sidebar_mass_readings_year', ['year' => $year])) ?></a></li>
             <li><a href="<?= url('pages/archive.php') ?>"><i class="bi bi-archive"></i> <?= e(__('sidebar_reading_archive')) ?></a></li>
             <li><a href="<?= url('pages/search.php') ?>"><i class="bi bi-search"></i> <?= e(__('sidebar_search_readings')) ?></a></li>
-            <li><a href="<?= url('pages/saints.php') ?>"><i class="bi bi-star"></i> <?= e(__('sidebar_saints_calendar')) ?></a></li>
         </ul>
     </div>
 

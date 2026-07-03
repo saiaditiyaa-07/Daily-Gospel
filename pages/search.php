@@ -44,8 +44,6 @@ require __DIR__ . '/../includes/breadcrumbs.php';
                                     <label class="btn btn-outline-primary" for="type-date"><i class="bi bi-calendar3 me-1"></i> <?= e(__('search_type_date')) ?></label>
                                     <input type="radio" class="btn-check" name="searchType" id="type-reference" value="reference">
                                     <label class="btn btn-outline-primary" for="type-reference"><i class="bi bi-book me-1"></i> <?= e(__('search_type_reference')) ?></label>
-                                    <input type="radio" class="btn-check" name="searchType" id="type-saint" value="saint">
-                                    <label class="btn btn-outline-primary" for="type-saint"><i class="bi bi-star me-1"></i> <?= e(__('search_type_saint')) ?></label>
                                 </div>
                             </div>
 

@@ -29,7 +29,7 @@ if ($query === '' && $type !== 'date') {
     json_response(['success' => false, 'error' => __('search_query_required')], 400);
 }
 
-if (!in_array($type, ['date', 'saint', 'reference'], true)) {
+if (!in_array($type, ['date', 'reference'], true)) {
     json_response(['success' => false, 'error' => __('search_invalid_type')], 400);
 }
 
@@ -59,34 +59,7 @@ try {
             }
             break;
 
-        case 'saint':
-            $calendarService = new LiturgicalCalendarService();
-            $monthData = $calendarService->getMonth($year, $month);
-            $needle = strtolower($query);
 
-            if ($monthData['partial']) {
-                $warnings[] = 'Some saint names may be missing because liturgical data was incomplete.';
-            }
-
-            foreach ($monthData['days'] as $normalized) {
-                $haystack = strtolower(trim($normalized['saint'] . ' ' . $normalized['celebration']));
-                if ($haystack === '' || !str_contains($haystack, $needle)) {
-                    continue;
-                }
-
-                $results[] = [
-                    'type' => 'saint',
-                    'date' => $normalized['date'],
-                    'title' => $normalized['saint'] ?: $normalized['celebration'],
-                    'subtitle' => format_display_date($normalized['date']),
-                    'url' => url('index.php?date=' . $normalized['date']),
-                ];
-
-                if (count($results) >= SEARCH_MAX_RESULTS) {
-                    break;
-                }
-            }
-            break;
 
         case 'reference':
             $readingProvider = Language::get() === 'ta'

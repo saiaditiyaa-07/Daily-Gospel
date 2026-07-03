@@ -5,10 +5,15 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <img src="<?= url('assets/images/logo.svg') ?>" alt="" width="32" height="32">
-                        <h5 class="mb-0 text-white"><?= e(__('app_name')) ?></h5>
+                        <i class="bi bi-cross text-warning fs-3"></i>
+                        <h5 class="mb-0 text-white font-serif"><?= e(__('app_name')) ?></h5>
                     </div>
                     <p class="text-white-50 mb-0"><?= e(__('footer_desc')) ?></p>
+                    <?php if (Language::get() === 'ta'): ?>
+                        <p class="fst-italic text-warning opacity-75 mt-3 mb-0 small" style="font-family: var(--dg-font-serif); font-size: 0.95rem; line-height: 1.4;">"உம் வார்த்தையே என் காலடிக்கு விளக்கு;<br>என் பாதைக்கு ஒளி."<br><span class="opacity-50">— திருப்பாடல்கள் 119:105</span></p>
+                    <?php else: ?>
+                        <p class="fst-italic text-warning opacity-75 mt-3 mb-0 small" style="font-family: var(--dg-font-serif); font-size: 0.95rem; line-height: 1.4;">"Your word is a lamp for my feet,<br>a light on my path."<br><span class="opacity-50">— Psalm 119:105</span></p>
+                    <?php endif; ?>
                 </div>
                 <div class="col-6 col-lg-2">
                     <h6 class="text-white mb-3"><?= e(__('footer_explore')) ?></h6>
@@ -16,7 +21,6 @@
                         <li><a href="<?= url('index.php') ?>"><?= e(__('nav_home')) ?></a></li>
                         <li><a href="<?= url('pages/archive.php') ?>"><?= e(__('nav_archive')) ?></a></li>
                         <li><a href="<?= url('pages/search.php') ?>"><?= e(__('nav_search')) ?></a></li>
-                        <li><a href="<?= url('pages/saints.php') ?>"><?= e(__('nav_saints')) ?></a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-lg-2">
@@ -66,6 +70,7 @@
     <script src="<?= url('assets/js/dark-mode.js') ?>"></script>
     <script src="<?= url('assets/js/lang-switcher.js') ?>"></script>
     <script src="<?= url('assets/js/app.js') ?>"></script>
+    <script src="<?= url('assets/js/theme-animations.js') ?>"></script>
     <?php if (!empty($extraScripts) && is_array($extraScripts)): ?>
         <?php foreach ($extraScripts as $script): ?>
             <script src="<?= url($script) ?>"></script>
